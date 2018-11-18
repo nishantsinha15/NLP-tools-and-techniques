@@ -29,11 +29,11 @@ def preprocess(text):
 def get_documents():
     graphic_files = read_graphics()
 
-    # todo store one document in doc
+    # store one document in doc
     doc = graphic_files[0]
     # print(doc)
 
-    # todo store 1 document from every folder other than comp.grpahics in other_docs
+    # store 1 document from every folder other than comp.grpahics in other_docs
     t = time.time()
     temp_data = get_other_docs()
     print("Time taken to fetch docs = ", time.time() - t)
@@ -44,12 +44,11 @@ def get_documents():
         train_data = train_data + folder[1:]
     train_data = train_data + graphic_files[20:]
 
-    # print(random.sample(other_docs))
-    # todo store 19 docs from the same folder in same_docs
+    # store 19 docs from the same folder in same_docs
     same_docs = graphic_files[1:20]
     # print(random.sample(same_docs))
 
-    # todo return the 3 tuple
+    # return the 3 tuple
     print(len(doc), len(other_docs), len(same_docs), len(train_data))
     return doc, other_docs, same_docs, train_data
 
@@ -106,7 +105,7 @@ def get_other_docs():
 
 
 def main():
-    # todo train
+    # train
     doc, other_docs, same_docs, train_data = get_documents()
     train_documents = [TaggedDocument(doc, [i]) for i, doc in enumerate(train_data)]
     # t = time.time()
@@ -115,10 +114,11 @@ def main():
     # model.save(fname_or_handle='mymodel')
     # model.delete_temporary_training_data(keep_doctags_vectors=True, keep_inference=True)
 
+    # Load model
     fname = 'mymodel'
     model = Doc2Vec.load(fname)
 
-    # todo get vectors for the required files
+    # get vectors for the required files
     doc = model.infer_vector(doc)
     print(doc)
 
@@ -128,7 +128,7 @@ def main():
     for i in range(len(same_docs)):
         same_docs[i] = model.infer_vector(same_docs[i])
 
-    # todo get cosine similarity
+    # get cosine similarity
     cosine_similarity(doc, other_docs, same_docs)
 
 def cosine_similarity(doc, other_docs, same_docs):
